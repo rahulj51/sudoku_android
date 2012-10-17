@@ -1,8 +1,11 @@
 package org.example.sudoku;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -11,7 +14,9 @@ import android.view.View.OnClickListener;
 
 public class Sudoku extends Activity implements OnClickListener {
 
-    @Override
+    private static final String TAG = "Sudoku";
+
+	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sudoku);
@@ -61,6 +66,35 @@ public class Sudoku extends Activity implements OnClickListener {
 			startActivity(intent);
 			break;
 		
+		
+		case R.id.new_button :
+			openNewGameDialog();
+			break;
+			
+		case R.id.exit_button :
+			finish();
+			break;
 		}
 	}
+	
+	
+
+	private void openNewGameDialog() {
+		new AlertDialog.Builder(this)
+		.setTitle(R.string.new_game_title)
+		.setItems(R.array.difficulty,
+				new DialogInterface.OnClickListener() {
+					
+					public void onClick(DialogInterface dialog, int which) {
+						startGame(which);
+						
+					}
+
+				}).show();
+	}
+	
+	private void startGame(int i) {
+		Log.d(TAG, "clicked on " + i);
+	}
+	
 }
